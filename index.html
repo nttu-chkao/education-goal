@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>教育的目的</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>   
+</head>
+<body>
+    <div id="tag" style="margin:auto;width:768px; height:600px"></div>
+    <center><button type="button" class="btn btn-info btn-lg">教育的目的</button></center>
+    <script>
+
+    $("button").click(function(){
+        location.reload();
+    });
+
+
+    $(document).ready(function(){
+
+        var fill = d3.scaleOrdinal(d3.schemeCategory10);
+        var data = [
+            {text: "燃起求知的慾望", size: 10 + Math.random() * 90},
+            {text: "發大財", size: 10 + Math.random() * 90},
+            {text: "讓我們分辨誰在說謊", size: 10 + Math.random() * 90},
+            {text: "在創造宇宙既起之生命", size: 10 + Math.random() * 90},
+            {text: "分類", size: 10 + Math.random() * 90},  
+            {text: "傳承人類的智慧", size: 10 + Math.random() * 90},  
+            {text: "謀生", size: 10 + Math.random() * 90},         
+            {text: "耗時間", size: 10 + Math.random() * 90},   
+            {text: "教會我們怎麼去騙其他人", size: 10 + Math.random() * 90},    
+            {text: "啟發每個人的特質, 進而使人去探索新的可能", size: 10 + Math.random() * 90},   
+            {text: "傳授解決問題的方法", size: 10 + Math.random() * 90}, 
+            {text: "知識就是力量", size: 10 + Math.random() * 90}, 
+            {text: "讓你開始會問這一類無法回答的問題", size: 10 + Math.random() * 90}, 
+            {text: "供翻轉未來的機會", size: 10 + Math.random() * 90}, 
+            {text: "我想就是鼓勵吧, 鼓勵可以讓人持續向前, 持續摸索方向", size: 10 + Math.random() * 90}, 
+            {text: "讓人們知道自己該知道什麼, 以及人們還不知道什麼", size: 10 + Math.random() * 90},
+            {text: "滿足部分長輩的虛榮感", size: 10 + Math.random() * 90},     
+            {text: "讓學生能保持學習的熱情", size: 10 + Math.random() * 90}, 
+            {text: "為了持續複製階級, 也為了逃離階級複製", size: 10 + Math.random() * 90}, 
+            {text: "經濟發展, 文化發展, 社會發展, 學習如何學習", size: 10 + Math.random() * 90}, 
+        ];
+
+        var w = parseInt(d3.select("#tag").style("width"), 10);
+        var h = parseInt(d3.select("#tag").style("height"), 10);
+
+        d3.layout.cloud().size([w, h])
+            .words(data)
+            .padding(3)
+            .rotate(function () {
+                return 0; 
+            })
+            .fontSize(function (d){
+                return d.size;
+            })
+            .on("end", draw)
+            .start();
+
+        function draw(words){
+            d3.select("#tag").append("svg")
+                .attr("width", w)
+                .attr("height", h)
+                .append("g")
+                .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function (d) {
+                    return d.size + "px";
+                })
+                .style("font-family", "Microsoft JhengHei")
+                .style("fill", function (d, i) {
+                    return fill(i);
+                })
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function (d) {
+                    return d.text;
+                });
+        }        
+    });
+
+    </script>
+</body>
+</html>
