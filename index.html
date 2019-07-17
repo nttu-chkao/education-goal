@@ -58,6 +58,9 @@
 
         var w = parseInt(d3.select("#tag").style("width"), 10);
         var h = parseInt(d3.select("#tag").style("height"), 10);
+        if ($(window).width()<500){
+            w = 350;
+        }
 
         d3.layout.cloud().size([w, h])
             .words(data)
@@ -81,7 +84,7 @@
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) {
-                    return d.size + "px";
+                	return d.size + "px";
                 })
                 .style("font-family", "Microsoft JhengHei")
                 .style("fill", function (d, i) {
@@ -96,7 +99,6 @@
                 });
         }        
     });
-
     </script>
 </body>
 </html>
